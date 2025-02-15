@@ -9,6 +9,7 @@ import { Send, Settings, LogOut, Menu } from "lucide-react";
 import Link from "next/link";
 import { useSocket } from '@/app/hooks/useSocket';
 import { v4 as uuidv4 } from 'uuid';
+import { v4 } from "uuid";
 
 
 
@@ -23,7 +24,6 @@ interface Message {
 export default function ChatPage() {
   
   const { isConnected, messages, sendMessage } = useSocket();
-  // const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -36,7 +36,7 @@ export default function ChatPage() {
               content: newMessage,
               timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
               // isMe: true,
-              avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=32&h=32&q=80",
+              avatar: "https://media.licdn.com/dms/image/v2/D4D03AQHXpJebXN8V6g/profile-displayphoto-shrink_100_100/B4DZP3_UD_GUAU-/0/1735032392292?e=1744848000&v=beta&t=-hJBPowYamc7cbkZndwgynr9VwC-bKOG3rvld9ZfTlA",
             };
         sendMessage(sentMessage);
         setNewMessage('');
@@ -50,18 +50,18 @@ export default function ChatPage() {
   }, [messages]);
 
   return (
-    <div className="flex h-screen bg-background">
+    <main  className="flex h-screen bg-background">
       {/* Sidebar */}
       <div className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-card shadow-lg transition-transform duration-200 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0`}>
         <div className="flex h-full flex-col">
           <div className="p-4">
             <div className="flex items-center space-x-3">
               <Avatar>
-                <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=32&h=32&q=80" />
+                <AvatarImage src="https://avatars.githubusercontent.com/u/153986120?v=4" />
                 <AvatarFallback>ME</AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-medium">Sarah Wilson</p>
+                <p className="font-medium">zaki</p>
                 <p className={`mb-4 text-center ${isConnected ? 'text-green-500' : 'text-red-500'}`}>
                           {isConnected ? 'Connected' : 'Disconnected'}
                         </p>
@@ -117,7 +117,7 @@ export default function ChatPage() {
             }
             {messages.map((message) => (
               <div
-                key={Number(message.id)}
+                key={v4()}
                 className={`flex items-start space-x-2 ${
                   true ? 'flex-row-reverse space-x-reverse' : ''
                 }`}
@@ -162,6 +162,6 @@ export default function ChatPage() {
           </div>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
