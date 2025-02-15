@@ -14,7 +14,17 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+  sentMessages    Message[] @relation("SentMessages")    
+  receivedMessages Message[] @relation("ReceivedMessages") 
 }
 
-
-
+model Message {
+id    Int     @id @default(autoincrement())
+content String
+timestamp String
+avatar String?
+senderId    Int    // Foreign key to User (sender)
+  sender      User   @relation("SentMessages", fields: [senderId], references: [id])
+  receiverId  Int    // Foreign key to User (receiver)
+  receiver    User   @relation("ReceivedMessages", fields: [receiverId], references: [id])
+}
