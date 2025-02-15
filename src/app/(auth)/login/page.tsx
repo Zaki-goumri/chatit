@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,12 +11,20 @@ import { MessageCircle } from "lucide-react";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+ const [isMounted, setIsMounted] = useState(false);
+ 
+ useEffect(() => {
+   setIsMounted(true);
+ }, []);
 
+
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle login logic here
   };
-
+    
+  if(!isMounted) return null;
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-background to-muted p-4">
       <Card className="w-full max-w-md">
