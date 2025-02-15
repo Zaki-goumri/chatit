@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useSocket } from '@/app/hooks/useSocket';
 import { v4 as uuidv4 } from 'uuid';
 import { v4 } from "uuid";
+import { useUserStore } from "@/lib/store";
 
 
 
@@ -22,7 +23,7 @@ interface Message {
 }
 
 export default function ChatPage() {
-  
+  const user = useUserStore(state=> state.user)
   const { isConnected, messages, sendMessage } = useSocket();
   const [newMessage, setNewMessage] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function ChatPage() {
                 <AvatarFallback>ME</AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-medium">zaki</p>
+                <p className="font-medium">{ user?.name}</p>
                 <p className={`mb-4 text-center ${isConnected ? 'text-green-500' : 'text-red-500'}`}>
                           {isConnected ? 'Connected' : 'Disconnected'}
                         </p>
