@@ -15,9 +15,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/lib/store";
 import type { User } from "@/lib/store";
-import { cx } from "class-variance-authority";
-type RegisterResponse = { user: { id: number; email: string; name: string } };
+
 type RegisterRequest = { email: string; password: string; name: string };
+type RegisterResponse = { user:{ email: string; password: string; name: string,id:number }};
 
 
 const formSchema = z.object({
@@ -28,8 +28,6 @@ const formSchema = z.object({
 
 export default function RegisterPage() {
   const [isMounted, setIsMounted] = useState(false);
-  const setUser = useUserStore((state) => state.setUser);
-  const user = useUserStore((state) => state.user);
   
   const {
     register,
@@ -44,10 +42,11 @@ export default function RegisterPage() {
     },
   });
   
- 
+  const setUser = useUserStore(state => state.setUser);
+
   const registerUser = async (data: RegisterRequest): Promise<User> => {
-    const response = await axios.post<User>("/register/api", data);
-    return response.data; 
+    const response = await axios.post<RegisterResponse>("/register/api", data);
+    return {email:response.data.user.email,name:response.data.user.name}; 
   }; 
   
   const router = useRouter();
@@ -55,11 +54,8 @@ export default function RegisterPage() {
   const mutation = useMutation({
     mutationFn: registerUser,
     onSuccess: (data) => {
-      
-      setUser(data);
-      console.log(data);
-      console.log(user);
-        router.push("/chat");
+      setUser({...data});
+      router.push("/chat");
     },
   
     onError: (error) => {
