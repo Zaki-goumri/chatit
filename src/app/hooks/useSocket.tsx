@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 
 
-interface Message {
-  id: unknown;
-  sender: string;
+export interface Message {
+  id: number;
+  sender: number;
+  receiver: number; // Add receiver to the message interface
   content: string;
   timestamp: string;
   avatar?: string;

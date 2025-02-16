@@ -46,7 +46,7 @@ export default function LoginPage() {
   // Define the login mutation
   const loginUser = async (data: LoginRequest): Promise<User> => {
     const response = await axios.post<LoginResponse>("/login/api", data);
-    return { email: response.data.user.email, name: response.data.user.name };
+    return { email: response.data.user.email, name: response.data.user.name,id:response.data.user.id };
   };
 
   const mutation = useMutation({
@@ -58,10 +58,8 @@ export default function LoginPage() {
     onError: (error) => {
       if (axios.isAxiosError(error) && error.response) {
         console.log((error.response.data as { error?: string }).error);
-        alert(error.response.data.error || "Login failed");
       } else {
-        console.error("Unknown error:", error);
-        alert("An unknown error occurred");
+        console.error("Unknown error");
       }
     },
   });

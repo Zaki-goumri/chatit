@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { Cone, MessageCircle } from "lucide-react";
+import {  MessageCircle } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -46,7 +46,7 @@ export default function RegisterPage() {
 
   const registerUser = async (data: RegisterRequest): Promise<User> => {
     const response = await axios.post<RegisterResponse>("/register/api", data);
-    return {email:response.data.user.email,name:response.data.user.name}; 
+    return {email:response.data.user.email,name:response.data.user.name,id:response.data.user.id}; 
   }; 
   
   const router = useRouter();
