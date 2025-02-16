@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 export interface User {
+  id: number,
   email: string;
   name: string;
 }
